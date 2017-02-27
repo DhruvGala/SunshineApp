@@ -18,6 +18,9 @@ package com.example.android.sunshine;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.android.sunshine.data.SunshinePreferences;
@@ -41,16 +44,10 @@ public class MainActivity extends AppCompatActivity {
          */
         mWeatherTextView = (TextView) findViewById(R.id.tv_weather_data);
 
-        // COMPLETED (4) Delete the dummy weather data. You will be getting REAL data from the Internet in this lesson.
-
-        // COMPLETED (3) Delete the for loop that populates the TextView with dummy data
-
-        // COMPLETED (9) Call loadWeatherData to perform the network request to get the weather
         /* Once all of our views are setup, we can load the weather data. */
         loadWeatherData();
     }
 
-    // COMPLETED (8) Create a method that will get the user's preferred location and execute your new AsyncTask and call it loadWeatherData
     /**
      * This method will get the user's preferred location for weather, and then tell some
      * background method to get the weather data in the background.
@@ -60,10 +57,8 @@ public class MainActivity extends AppCompatActivity {
         new FetchWeatherTask().execute(location);
     }
 
-    // COMPLETED (5) Create a class that extends AsyncTask to perform network requests
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
-        // COMPLETED (6) Override the doInBackground method to perform your network requests
         @Override
         protected String[] doInBackground(String... params) {
 
@@ -90,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // COMPLETED (7) Override the onPostExecute method to display the results of the network request
         @Override
         protected void onPostExecute(String[] weatherData) {
             if (weatherData != null) {
@@ -104,5 +98,33 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    // TODO (2) Create a menu resource in res/menu/ called forecast.xml
+    // TODO (3) Add one item to the menu with an ID of action_refresh
+    // TODO (4) Set the title of the menu item to "Refresh" using strings.xml
+
+    // TODO (5) Override onCreateOptionsMenu to inflate the menu for this Activity
+    // TODO (6) Return true to display the menu
+
+    // TODO (7) Override onOptionsItemSelected to handle clicks on the refresh button
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.forecast, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_refresh) {
+            mWeatherTextView.setText(" ");
+            loadWeatherData();;
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

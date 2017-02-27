@@ -1,8 +1,11 @@
 <component name="libraryTable">
   <library name="rules-0.5">
+    <ANNOTATIONS>
+      <root url="jar://C:/tmp/S02.02-Exercise-Menus/app/intermediates/exploded-aar/com.android.support.test/rules/0.5/annotations.zip!/" />
+    </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://C:/tmp/S02.01-Solution-Networking/app/intermediates/exploded-aar/com.android.support.test/rules/0.5/jars/classes.jar!/" />
-      <root url="file://C:/tmp/S02.01-Solution-Networking/app/intermediates/exploded-aar/com.android.support.test/rules/0.5/res" />
+      <root url="jar://C:/tmp/S02.02-Exercise-Menus/app/intermediates/exploded-aar/com.android.support.test/rules/0.5/jars/classes.jar!/" />
+      <root url="file://C:/tmp/S02.02-Exercise-Menus/app/intermediates/exploded-aar/com.android.support.test/rules/0.5/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
