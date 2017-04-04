@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/S04.01-Exercise-LaunchNewActivity.iml" filepath="$PROJECT_DIR$/S04.01-Exercise-LaunchNewActivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/S06.02-Exercise-SettingsFragment.iml" filepath="$PROJECT_DIR$/S06.02-Exercise-SettingsFragment.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
