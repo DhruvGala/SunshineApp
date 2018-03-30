@@ -141,29 +141,31 @@ public class WeatherProvider extends ContentProvider {
     @Override
     public int bulkInsert(@NonNull Uri uri, @NonNull ContentValues[] values) {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
-        switch (sUriMatcher.match(uri)){
+
+        switch (sUriMatcher.match(uri)) {
+
             case CODE_WEATHER:
                 db.beginTransaction();
                 int rowsInserted = 0;
-
-                try{
-                    for(ContentValues value : values){
-                        long weatherData = value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
-                        if(!SunshineDateUtils.isDateNormalized(weatherData)){
+                try {
+                    for (ContentValues value : values) {
+                        long weatherDate =
+                                value.getAsLong(WeatherContract.WeatherEntry.COLUMN_DATE);
+                        if (!SunshineDateUtils.isDateNormalized(weatherDate)) {
                             throw new IllegalArgumentException("Date must be normalized to insert");
                         }
+
                         long _id = db.insert(WeatherContract.WeatherEntry.TABLE_NAME, null, value);
-                        if(_id != -1){
+                        if (_id != -1) {
                             rowsInserted++;
                         }
                     }
                     db.setTransactionSuccessful();
-                }
-                finally {
+                } finally {
                     db.endTransaction();
                 }
 
-                if(rowsInserted > 0){
+                if (rowsInserted > 0) {
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
 
@@ -301,23 +303,35 @@ public class WeatherProvider extends ContentProvider {
      */
     @Override
     public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
+
+        /* Users of the delete method will expect the number of rows deleted to be returned. */
         int numRowsDeleted;
 
-        if(null == selection) selection = "1";
+        /*
+         * If we pass null as the selection to SQLiteDatabase#delete, our entire table will be
+         * deleted. However, if we do pass null and delete all of the rows in the table, we won't
+         * know how many rows were deleted. According to the documentation for SQLiteDatabase,
+         * passing "1" for the selection will delete all rows and return the number of rows
+         * deleted, which is what the caller of this method expects.
+         */
+        if (null == selection) selection = "1";
 
         switch (sUriMatcher.match(uri)) {
+
             case CODE_WEATHER:
                 numRowsDeleted = mOpenHelper.getWritableDatabase().delete(
-                  WeatherContract.WeatherEntry.TABLE_NAME,
+                        WeatherContract.WeatherEntry.TABLE_NAME,
                         selection,
-                        selectionArgs
-                );
+                        selectionArgs);
+
                 break;
+
             default:
-                throw new  UnsupportedOperationException("Unkown uri: " + uri);
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        if(numRowsDeleted > 0){
+        /* If we actually deleted any rows, notify that a change has occurred to this URI */
+        if (numRowsDeleted != 0) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 
