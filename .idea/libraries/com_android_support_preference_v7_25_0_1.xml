@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.android.support:preference-v7-25.0.1">
     <CLASSES>
-      <root url="file://C:/tmp/SunshineApp/app/intermediates/exploded-aar/com.android.support/preference-v7/25.0.1/res" />
-      <root url="jar://C:/tmp/SunshineApp/app/intermediates/exploded-aar/com.android.support/preference-v7/25.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/preference-v7-25.0.1.aar/4e0bd3e1354185427f8510e329ef3f34/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/preference-v7-25.0.1.aar/4e0bd3e1354185427f8510e329ef3f34/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/AppData/Local/Android/sdk/extras/android/m2repository/com/android/support/preference-v7/25.0.1/preference-v7-25.0.1-javadoc.jar!/" />
