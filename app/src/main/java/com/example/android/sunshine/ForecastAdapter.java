@@ -48,9 +48,15 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      * The interface that receives onClick messages.
      */
     public interface ForecastAdapterOnClickHandler {
-//      COMPLETED (36) Refactor onClick to accept a long as its parameter rather than a String
         void onClick(long date);
     }
+
+    /*
+     * Flag to determine if we want to use a separate view for the list item that represents
+     * today. This flag will be true when the phone is in portrait mode and false when the phone
+     * is in landscape. This flag will be set in the constructor of the adapter by accessing
+     * boolean resources.
+     */
 
     private Cursor mCursor;
 
@@ -84,8 +90,6 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
                 .from(mContext)
                 .inflate(R.layout.forecast_list_item, viewGroup, false);
 
-        view.setFocusable(true);
-
         return new ForecastAdapterViewHolder(view);
     }
 
@@ -103,20 +107,21 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
     public void onBindViewHolder(ForecastAdapterViewHolder forecastAdapterViewHolder, int position) {
         mCursor.moveToPosition(position);
 
+//      TODO (7) Replace the single TextView with Views to display all of the weather info
 
         /*******************
          * Weather Summary *
          *******************/
-        /* Read date from the cursor */
+         /* Read date from the cursor */
         long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
-        /* Get human readable string using our utility method */
+         /* Get human readable string using our utility method */
         String dateString = SunshineDateUtils.getFriendlyDateString(mContext, dateInMillis, false);
-        /* Use the weatherId to obtain the proper description */
+         /* Use the weatherId to obtain the proper description */
         int weatherId = mCursor.getInt(MainActivity.INDEX_WEATHER_CONDITION_ID);
         String description = SunshineWeatherUtils.getStringForWeatherCondition(mContext, weatherId);
-        /* Read high temperature from the cursor (in degrees celsius) */
+         /* Read high temperature from the cursor (in degrees celsius) */
         double highInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MAX_TEMP);
-        /* Read low temperature from the cursor (in degrees celsius) */
+         /* Read low temperature from the cursor (in degrees celsius) */
         double lowInCelsius = mCursor.getDouble(MainActivity.INDEX_WEATHER_MIN_TEMP);
 
         String highAndLowTemperature =
@@ -158,11 +163,15 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
      * OnClickListener, since it has access to the adapter and the views.
      */
     class ForecastAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//      TODO (4) Replace the weatherSummary TextView with individual weather detail TextViews
         final TextView weatherSummary;
+
+//      TODO (5) Add an ImageView for the weather icon
 
         ForecastAdapterViewHolder(View view) {
             super(view);
 
+//          TODO (6) Get references to all new views and delete this line
             weatherSummary = (TextView) view.findViewById(R.id.tv_weather_data);
 
             view.setOnClickListener(this);
@@ -178,7 +187,6 @@ class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ForecastAdapt
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-//          COMPLETED (37) Instead of passing the String for the clicked item, pass the date from the cursor
             mCursor.moveToPosition(adapterPosition);
             long dateInMillis = mCursor.getLong(MainActivity.INDEX_WEATHER_DATE);
             mClickHandler.onClick(dateInMillis);
